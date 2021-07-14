@@ -24,6 +24,7 @@ namespace xtellurian.HubSpot.Generator
             await GenerateFromFeature("Contacts", crmApi.Features["Contacts"]);
             await GenerateFromFeature("Contact Properties", crmApi.Features["Contact Properties"]);
             await GenerateFromFeature("Crm Extensions", crmApi.Features["Crm Extensions"]);
+            await GenerateFromFeature("Associations", crmApi.Features["Associations"]);
 
             Console.WriteLine("Done.");
         }
