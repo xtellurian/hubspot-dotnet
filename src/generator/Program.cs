@@ -28,18 +28,18 @@ namespace xtellurian.HubSpot.Generator
             await GenerateFromFeature("Tickets", crmApi.Features["Tickets"]);
 
             var eventsApi = apiCollection.GetResultByName("EVENTS");
-            await GenerateFromFeature("Events", eventsApi.Features["Events"]);
-            
+            await GenerateFromFeature("Events", eventsApi.Features["Events"], typeof(DateTime).FullName);
+
             Console.WriteLine("Done.");
         }
 
-        private static async Task GenerateFromFeature(string name, Feature feature)
+        private static async Task GenerateFromFeature(string name, Feature feature, string dateTimeType = null)
         {
             var fixedName = name.Replace(" ", "");
             using (System.Net.WebClient wclient = new System.Net.WebClient())
             {
                 var document = await OpenApiDocument.FromJsonAsync(wclient.DownloadString(feature.OpenApi));
-                await GenerateCode(document, fixedName, $"../hubspotdotnet/{fixedName}.cs");
+                await GenerateCode(document, fixedName, $"../hubspotdotnet/{fixedName}.cs", dateTimeType);
             }
             Console.WriteLine($"Generated '{name}' feature client");
         }
@@ -50,7 +50,7 @@ namespace xtellurian.HubSpot.Generator
             return JsonConvert.DeserializeObject<HubspotApiCollection>(text, new StageConverter());
         }
 
-        private static async Task GenerateCode(OpenApiDocument document, string name, string outputPath)
+        private static async Task GenerateCode(OpenApiDocument document, string name, string outputPath, string dateTimeType = null)
         {
             var settings = new CSharpClientGeneratorSettings
             {
@@ -60,7 +60,8 @@ namespace xtellurian.HubSpot.Generator
                 {
                     Namespace = OutputNamespace(name),
                     ArrayInstanceType = "System.Collections.Generic.List", // this is required because of a type casting error on compilation
-                    ArrayType = "System.Collections.Generic.List"
+                    ArrayType = "System.Collections.Generic.List",
+                    DateTimeType = dateTimeType ?? typeof(DateTimeOffset).FullName
                 }
                 ,
                 OperationNameGenerator = new SingleClientFromPathSegmentsOperationNameGenerator(),

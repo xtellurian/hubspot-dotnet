@@ -60,7 +60,7 @@ namespace xtellurian.HubSpot.Events
         /// <param name="sort">Selects the sort field and order. Defaults to ascending, prefix with `-` for descending order. `occurredAt` is the only field supported for sorting.</param>
         /// <returns>successful operation</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<CollectionResponseExternalUnifiedEvent> EventsV3EventsAsync(System.DateTimeOffset? occurredAfter, System.DateTimeOffset? occurredBefore, string objectType, long? objectId, string eventType, string after, string before, int? limit, System.Collections.Generic.IEnumerable<string> sort)
+        public System.Threading.Tasks.Task<CollectionResponseExternalUnifiedEvent> EventsV3EventsAsync(System.DateTime? occurredAfter, System.DateTime? occurredBefore, string objectType, long? objectId, string eventType, string after, string before, int? limit, System.Collections.Generic.IEnumerable<string> sort)
         {
             return EventsV3EventsAsync(occurredAfter, occurredBefore, objectType, objectId, eventType, after, before, limit, sort, System.Threading.CancellationToken.None);
         }
@@ -77,7 +77,7 @@ namespace xtellurian.HubSpot.Events
         /// <param name="sort">Selects the sort field and order. Defaults to ascending, prefix with `-` for descending order. `occurredAt` is the only field supported for sorting.</param>
         /// <returns>successful operation</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<CollectionResponseExternalUnifiedEvent> EventsV3EventsAsync(System.DateTimeOffset? occurredAfter, System.DateTimeOffset? occurredBefore, string objectType, long? objectId, string eventType, string after, string before, int? limit, System.Collections.Generic.IEnumerable<string> sort, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<CollectionResponseExternalUnifiedEvent> EventsV3EventsAsync(System.DateTime? occurredAfter, System.DateTime? occurredBefore, string objectType, long? objectId, string eventType, string after, string before, int? limit, System.Collections.Generic.IEnumerable<string> sort, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/events/v3/events?");
@@ -432,7 +432,7 @@ namespace xtellurian.HubSpot.Events
         /// <summary>An ISO 8601 timestamp when the event occurred.</summary>
         [Newtonsoft.Json.JsonProperty("occurredAt", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset OccurredAt { get; set; }
+        public System.DateTime OccurredAt { get; set; }
     
         /// <summary>A unique identifier for the event.</summary>
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
