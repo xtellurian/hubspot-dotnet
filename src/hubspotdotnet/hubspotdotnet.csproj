@@ -3,7 +3,7 @@
     <TargetFramework>netstandard1.3</TargetFramework>
 
     <PackageId>xtellurian.HubSpot</PackageId>
-    <Version>1.2.1</Version>
+    <Version>1.2.3</Version>
     <Authors>Rian Finnegan</Authors>
     <Company>Four2.ai</Company>
 

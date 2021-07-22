@@ -41,7 +41,8 @@ namespace xtellurian.HubSpot.Events
             set { _baseUrl = value; }
         }
     
-        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
+    
+        public Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
     
         partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
     
@@ -60,7 +61,7 @@ namespace xtellurian.HubSpot.Events
         /// <param name="sort">Selects the sort field and order. Defaults to ascending, prefix with `-` for descending order. `occurredAt` is the only field supported for sorting.</param>
         /// <returns>successful operation</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<CollectionResponseExternalUnifiedEvent> EventsV3EventsAsync(System.DateTime? occurredAfter, System.DateTime? occurredBefore, string objectType, long? objectId, string eventType, string after, string before, int? limit, System.Collections.Generic.IEnumerable<string> sort)
+        public System.Threading.Tasks.Task<CollectionResponseExternalUnifiedEvent> EventsV3EventsAsync(string occurredAfter, string occurredBefore, string objectType, long? objectId, string eventType, string after, string before, int? limit, System.Collections.Generic.IEnumerable<string> sort)
         {
             return EventsV3EventsAsync(occurredAfter, occurredBefore, objectType, objectId, eventType, after, before, limit, sort, System.Threading.CancellationToken.None);
         }
@@ -77,17 +78,17 @@ namespace xtellurian.HubSpot.Events
         /// <param name="sort">Selects the sort field and order. Defaults to ascending, prefix with `-` for descending order. `occurredAt` is the only field supported for sorting.</param>
         /// <returns>successful operation</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<CollectionResponseExternalUnifiedEvent> EventsV3EventsAsync(System.DateTime? occurredAfter, System.DateTime? occurredBefore, string objectType, long? objectId, string eventType, string after, string before, int? limit, System.Collections.Generic.IEnumerable<string> sort, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<CollectionResponseExternalUnifiedEvent> EventsV3EventsAsync(string occurredAfter, string occurredBefore, string objectType, long? objectId, string eventType, string after, string before, int? limit, System.Collections.Generic.IEnumerable<string> sort, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/events/v3/events?");
             if (occurredAfter != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("occurredAfter") + "=").Append(System.Uri.EscapeDataString(occurredAfter.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("occurredAfter") + "=").Append(System.Uri.EscapeDataString(ConvertToString(occurredAfter, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (occurredBefore != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("occurredBefore") + "=").Append(System.Uri.EscapeDataString(occurredBefore.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("occurredBefore") + "=").Append(System.Uri.EscapeDataString(ConvertToString(occurredBefore, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (objectType != null)
             {
@@ -432,7 +433,7 @@ namespace xtellurian.HubSpot.Events
         /// <summary>An ISO 8601 timestamp when the event occurred.</summary>
         [Newtonsoft.Json.JsonProperty("occurredAt", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTime OccurredAt { get; set; }
+        public string OccurredAt { get; set; }
     
         /// <summary>A unique identifier for the event.</summary>
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
